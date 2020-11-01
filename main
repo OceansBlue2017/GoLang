@@ -1,4 +1,4 @@
-package main          // rhino-scraper
+package main
 
 import (
 	"fmt"
@@ -9,6 +9,7 @@ import (
 	//"os"
 	"io/ioutil" // to be able to write to a file
 )
+
 type Fact struct {
 	ID          int    `json:"id"`
 	Description string `json:"description"`
@@ -18,12 +19,12 @@ func main() {
 	allFacts := make([]Fact, 0)
 
 	collector := colly.NewCollector(
-		colly.AllowedDomains("factretriever.com", "www.factretreiver.com"),
+		colly.AllowedDomains("factretriever.com", "www.factretriever.com"),
 	)
 
 
 	collector.OnHTML(".factsList li", func(element *colly.HTMLElement){
-		factid, err := strconv.Atoi(element.Attr("id"))
+		FactID, err := strconv.Atoi(element.Attr("id"))
 		if err != nil {
 			log.Println("Could not get id")
 		}
@@ -31,7 +32,7 @@ func main() {
 		factDesc := element.Text
 
 		fact := Fact{
-			ID: factid,
+			ID: FactID,
 			Description: factDesc,
 		}
 
